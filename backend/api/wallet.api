@@ -1,0 +1,42 @@
+syntax = "v1"
+
+info (
+	title: "wallet"
+	desc: "区块链钱包"
+	author: "JK407"
+	email: "1467511770@qq.com"
+)
+
+//  请求结构体
+type (
+	CreateWalletReq {
+		Password string `json:"password"`
+	}
+)
+
+// data
+type (
+	CreateWalletData {
+		Address  string `json:"address"`
+		Mnemonic string `json:"mnemonic"`
+	}
+)
+
+//  响应结构体
+type (
+	Response {
+		Code int         `json:"code"`
+		Msg  string      `json:"msg"`
+		Data interface{} `json:"data"`
+	}
+)
+// 钱包模块
+@server(
+	group: wallet
+	prefix: /api/v1/wallet
+)
+
+service wallet-api {
+	@handler CreateWallet
+	post /create(CreateWalletReq) returns (Response)
+}
