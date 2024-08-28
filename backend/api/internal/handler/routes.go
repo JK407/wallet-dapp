@@ -18,6 +18,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/create",
 				Handler: wallet.CreateWalletHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/login",
+				Handler: wallet.LoginWalletHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/api/v1/wallet"),
 	)

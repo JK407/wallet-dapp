@@ -5,9 +5,20 @@ type CreateWalletReq struct {
 	Password string `json:"password" validate:"required"`
 }
 
+type LoginWalletReq struct {
+	Password string `json:"password" validate:"required"`
+	WalletID uint   `json:"wallet_id" validate:"required"`
+}
+
 type CreateWalletData struct {
 	Address  string `json:"address"`
 	Mnemonic string `json:"mnemonic"`
+}
+
+type WalletInfoData struct {
+	ID                int    `json:"id"`
+	Address           string `json:"address"`
+	EncryptedMnemonic string `json:"encrypted_mnemonic"`
 }
 
 type Response struct {

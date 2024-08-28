@@ -12,6 +12,10 @@ type (
 	CreateWalletReq {
 		Password string `json:"password"`
 	}
+	LoginWalletReq {
+		Password string `json:"password"`
+		WalletID uint   `json:"wallet_id"`
+	}
 )
 
 // data
@@ -19,6 +23,11 @@ type (
 	CreateWalletData {
 		Address  string `json:"address"`
 		Mnemonic string `json:"mnemonic"`
+	}
+	WalletInfoData {
+		ID                int    `json:"id"`
+		Address           string `json:"address"`
+		EncryptedMnemonic string `json:"encrypted_mnemonic"`
 	}
 )
 
@@ -39,4 +48,7 @@ type (
 service wallet-api {
 	@handler CreateWallet
 	post /create(CreateWalletReq) returns (Response)
+
+	@handler LoginWallet
+	post /login(LoginWalletReq) returns (Response)
 }

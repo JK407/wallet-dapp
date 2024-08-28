@@ -7,7 +7,6 @@ import (
 	"time"
 )
 
-// todo caller
 type dbLog struct {
 	LogLevel logger.LogLevel
 }
