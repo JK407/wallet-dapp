@@ -31,7 +31,11 @@ func (l *LoginWalletLogic) LoginWallet(req *types.LoginWalletReq) (resp *types.R
 	password := req.Password
 	walletID := req.WalletID
 	// 根据id查询数据库
-	l.svcCtx.Gdb.WithContext(l.ctx).First(&wallet, walletID)
+	err = l.svcCtx.Gdb.WithContext(l.ctx).First(&wallet, walletID).Error
+	if err != nil {
+		logx.Errorf("get [walletId:%d] Info error:%v", walletID, err)
+		return constants.LoginErr, nil
+	}
 	//  校验密码
 	if !encrypt.CheckPasswordHash(password, wallet.Password) {
 		logx.Error("check password error")
