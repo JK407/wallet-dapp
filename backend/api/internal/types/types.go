@@ -8,9 +8,11 @@ type CreateWalletReq struct {
 type LoginWalletReq struct {
 	Password string `json:"password" validate:"required"`
 	WalletID uint   `json:"wallet_id" validate:"required"`
+	Address  string `json:"address" validate:"required"`
 }
 
 type CreateWalletData struct {
+	WalletID int    `json:"wallet_id"`
 	Address  string `json:"address"`
 	Mnemonic string `json:"mnemonic"`
 }

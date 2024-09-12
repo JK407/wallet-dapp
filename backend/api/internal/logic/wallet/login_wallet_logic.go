@@ -30,10 +30,15 @@ func (l *LoginWalletLogic) LoginWallet(req *types.LoginWalletReq) (resp *types.R
 	var wallet models.WalletModel
 	password := req.Password
 	walletID := req.WalletID
+	address := req.Address
 	// 根据id查询数据库
 	err = l.svcCtx.Gdb.WithContext(l.ctx).First(&wallet, walletID).Error
 	if err != nil {
 		logx.Errorf("get [walletId:%d] Info error:%v", walletID, err)
+		return constants.LoginErr, nil
+	}
+	if wallet.Address != address {
+		logx.Error("check address error")
 		return constants.LoginErr, nil
 	}
 	//  校验密码
@@ -46,11 +51,13 @@ func (l *LoginWalletLogic) LoginWallet(req *types.LoginWalletReq) (resp *types.R
 		logx.Error("decrypt mnemonic error")
 		return constants.LoginErr, nil
 	}
+
 	walletInfo := types.WalletInfoData{
 		ID:                int(wallet.ID),
 		Address:           wallet.Address,
 		EncryptedMnemonic: wallet.Mnemonic,
 	}
 	constants.LoginWalletSuccess.Data = walletInfo
+	logx.Infof("login wallet success,walletInfo: [walletID:%d] [address:%s]", walletInfo.ID, walletInfo.Address)
 	return constants.LoginWalletSuccess, nil
 }

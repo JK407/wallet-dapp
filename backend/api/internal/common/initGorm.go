@@ -20,5 +20,7 @@ func InitGorm(DSN string) (*gorm.DB, error) {
 	sqlDB.SetMaxIdleConns(10)               // SetMaxIdleConns 用于设置连接池中空闲连接的最大数量。
 	sqlDB.SetMaxOpenConns(100)              // SetMaxOpenConns 设置打开数据库连接的最大数量。
 	sqlDB.SetConnMaxLifetime(time.Hour * 4) // SetConnMaxLifetime 设置了连接可复用的最大时间。不能超过mysql的wait_timeout设置，否则会出现mysql has gone away错误
+	//// 增加连接超时配置，避免长时间连接中断
+	//sqlDB.SetConnMaxIdleTime(time.Minute * 10) // 连接池中连接的最大空闲时间
 	return db, nil
 }

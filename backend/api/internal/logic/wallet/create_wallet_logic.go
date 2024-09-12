@@ -46,10 +46,7 @@ func (l *CreateWalletLogic) CreateWallet(req *types.CreateWalletReq) (resp *type
 	if err != nil {
 		logx.Errorf("address:%s failed to encrypt mnemonic", address)
 	}
-	data := &types.CreateWalletData{
-		Address:  address,
-		Mnemonic: mnemonic,
-	}
+
 	encryptedPass, err := encrypt.HashPassword(password)
 	if err != nil {
 		logx.Errorf("address:%s failed to encrypt password", address)
@@ -66,6 +63,11 @@ func (l *CreateWalletLogic) CreateWallet(req *types.CreateWalletReq) (resp *type
 		return constants.CreateErr, nil
 	}
 	logx.Infof("create wallet success,walletInfo:[address:%s] [walletID:%d]", address, wallet.ID)
+	data := &types.CreateWalletData{
+		WalletID: int(wallet.ID),
+		Address:  address,
+		Mnemonic: mnemonic,
+	}
 	constants.CreateSuccess.Data = data
 	return constants.CreateSuccess, nil
 }

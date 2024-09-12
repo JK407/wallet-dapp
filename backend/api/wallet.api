@@ -15,12 +15,14 @@ type (
 	LoginWalletReq {
 		Password string `json:"password"`
 		WalletID uint   `json:"wallet_id"`
+		Address  string `json:"address"`
 	}
 )
 
 // data
 type (
 	CreateWalletData {
+		WalletID int    `json:"wallet_id"`
 		Address  string `json:"address"`
 		Mnemonic string `json:"mnemonic"`
 	}
